@@ -13,6 +13,7 @@ export enum SubscriptionType {
 	USER = 'user',
 	LIST = 'list',
 	TIMELINE = 'timeline',
+	SEARCH = 'search',
 }
 
 export enum TableName {
@@ -23,4 +24,5 @@ export const TwitterApiUrlTable: Record<Subscription['type'], string> = {
 	[SubscriptionType.USER]: 'statuses/user_timeline',
 	[SubscriptionType.LIST]: 'lists/statuses',
 	[SubscriptionType.TIMELINE]: '', // TODO: timeline
+	[SubscriptionType.SEARCH]: 'search/tweets',
 };

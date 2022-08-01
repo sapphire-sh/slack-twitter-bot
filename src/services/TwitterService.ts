@@ -33,6 +33,11 @@ export class TwitterService {
 				case SubscriptionType.TIMELINE: {
 					return {};
 				}
+				case SubscriptionType.SEARCH: {
+					return {
+						q: subscription.value,
+					};
+				}
 			}
 		};
 
@@ -44,7 +49,18 @@ export class TwitterService {
 		};
 
 		const resp = await this.twit.get(url, params);
-		const tweets = resp.data as TweetEntity[];
+
+		const getTweets = (type: Subscription['type'], resp: Twit.PromiseResponse): TweetEntity[] => {
+			switch (type) {
+				case SubscriptionType.SEARCH: {
+					return (resp.data as any).statuses;
+				}
+				default: {
+					return resp.data as TweetEntity[];
+				}
+			}
+		};
+		const tweets = getTweets(subscription.type, resp);
 
 		console.log('tweets.length', tweets.length);
 

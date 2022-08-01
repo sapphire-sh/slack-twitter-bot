@@ -13,7 +13,8 @@ export class SubscriptionService {
 		switch (subscription.type) {
 			case SubscriptionType.LIST:
 			case SubscriptionType.TIMELINE:
-			case SubscriptionType.USER: {
+			case SubscriptionType.USER:
+			case SubscriptionType.SEARCH: {
 				const token = ConfigurationHelper.instance.tokens[subscription.user];
 				if (!token) {
 					throw new Error(`cannot find twitter token`);

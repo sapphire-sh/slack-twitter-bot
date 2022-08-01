@@ -1,5 +1,7 @@
 # slack-twitter-bot
 
+[![Join the chat at https://gitter.im/sapphire-sh/slack-twitter-bot](https://badges.gitter.im/sapphire-sh/slack-twitter-bot.svg)](https://gitter.im/sapphire-sh/slack-twitter-bot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## prerequisites
 
 ### ./data/tokens.json

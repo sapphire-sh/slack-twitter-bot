@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16-alpine
 
 RUN mkdir -p /opt/project
 WORKDIR /opt/project

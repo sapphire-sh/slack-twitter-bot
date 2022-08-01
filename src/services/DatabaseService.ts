@@ -46,6 +46,6 @@ export class DatabaseService {
 		console.log('database', new Date(), 'setLastTweetId', subscription_id, tweet_id);
 
 		const knex = this.knex<HistoryEntity>(TableName.HISTORY);
-		return await knex.insert({ subscription_id, tweet_id }).onConflict().merge();
+		return await knex.insert({ subscription_id, tweet_id }).onConflict(`subscription_id`).merge();
 	}
 }

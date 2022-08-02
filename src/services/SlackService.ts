@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SubscriptionAttributeType } from '../constants';
 import { TweetEntity } from '../entities';
 import { Subscription } from '../models';
-import { getTweetUrl, getTwitterMedia, sleep } from '../utils';
+import { getFilterKeywords, getTweetUrl, getTwitterMedia, hasTweetKeyword, sleep } from '../utils';
 
 export class SlackService {
 	public async sendInternal(url: string, username: string, text: string) {
@@ -24,6 +24,7 @@ export class SlackService {
 			ignoreRetweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_RETWEETS),
 			ignoreNonMediaTweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_NON_MEDIA_TWEETS),
 			ignoreSensitiveTweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_SENSITIVE_TWEETS),
+			filterKeywords: getFilterKeywords(subscription.attributes),
 		};
 
 		for (const tweet of tweets) {
@@ -31,11 +32,17 @@ export class SlackService {
 				if (flags.ignoreRetweets && tweet.retweeted_status) {
 					continue;
 				}
+
 				const media = getTwitterMedia(tweet);
 				if (flags.ignoreNonMediaTweets && media.length === 0) {
 					continue;
 				}
+
 				if (flags.ignoreSensitiveTweets && tweet.possibly_sensitive) {
+					continue;
+				}
+
+				if (flags.filterKeywords.some((keyword) => hasTweetKeyword(tweet, keyword))) {
 					continue;
 				}
 

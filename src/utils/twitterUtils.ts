@@ -11,3 +11,17 @@ export const getTweetUrl = (tweet: TweetEntity, stripRetweets = false): string =
 export const getTwitterMedia = (tweet: TweetEntity): any[] => {
 	return tweet.extended_entities?.media ?? [];
 };
+
+export const hasTweetKeyword = (tweet: TweetEntity, keyword: string): boolean => {
+	const _tweet = tweet.retweeted_status ?? tweet;
+
+	if (_tweet.user.name.includes(keyword)) {
+		return true;
+	}
+
+	if (_tweet.full_text.includes(keyword)) {
+		return true;
+	}
+
+	return false;
+};

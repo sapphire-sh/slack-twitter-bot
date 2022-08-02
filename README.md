@@ -40,6 +40,17 @@
       "ignore_non_media_tweets",
       "ignore_sensitive_tweets"
     ]
+  },
+  {
+    "id": 3,
+    "type": "search",
+    "user": 0,
+    "value": "{{KEYWORDS}}",
+    "url": "{{SLACK_WEBHOOK_URL}}",
+    "attributes": [
+      ["filter_keywords", "hello"],
+      ["filter_keywords", "world"]
+    ]
   }
 ]
 ```

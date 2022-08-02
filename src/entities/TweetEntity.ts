@@ -1,6 +1,8 @@
 export interface TweetEntity {
 	id_str: string;
+	full_text: string;
 	user: {
+		name: string;
 		screen_name: string;
 	};
 	entities?: {

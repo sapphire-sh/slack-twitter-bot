@@ -1,10 +1,10 @@
-import * as yup from 'yup';
+import { z } from 'zod';
 
-export const twitterTokenSchema = yup.object({
-	consumer_key: yup.string().required(),
-	consumer_secret: yup.string().required(),
-	access_token: yup.string().required(),
-	access_token_secret: yup.string().required(),
+export const twitterTokenSchema = z.object({
+	consumer_key: z.string(),
+	consumer_secret: z.string(),
+	access_token: z.string(),
+	access_token_secret: z.string(),
 });
 
-export type TwitterToken = yup.InferType<typeof twitterTokenSchema>;
+export type TwitterToken = z.infer<typeof twitterTokenSchema>;

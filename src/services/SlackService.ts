@@ -1,8 +1,9 @@
+import { sleep } from '@sapphire-sh/utils';
 import axios from 'axios';
 import { SubscriptionAttributeType } from '../constants';
 import { TweetEntity } from '../entities';
 import { Subscription } from '../models';
-import { getFilterKeywords, getTweetUrl, getTwitterMedia, hasTweetKeyword, sleep } from '../utils';
+import { getFilterKeywords, getTweetUrl, getTwitterMedia, hasTweetKeyword } from '../utils';
 
 export class SlackService {
 	public async sendInternal(url: string, username: string, text: string) {

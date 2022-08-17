@@ -24,6 +24,7 @@ export class SlackService {
 			ignoreRetweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_RETWEETS),
 			ignoreNonMediaTweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_NON_MEDIA_TWEETS),
 			ignoreSensitiveTweets: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_SENSITIVE_TWEETS),
+			ignoreReplies: subscription.attributes.includes(SubscriptionAttributeType.IGNORE_REPLIES),
 			filterKeywords: getFilterKeywords(subscription.attributes),
 		};
 
@@ -39,6 +40,10 @@ export class SlackService {
 				}
 
 				if (flags.ignoreSensitiveTweets && tweet.possibly_sensitive) {
+					continue;
+				}
+
+				if (flags.ignoreReplies && tweet.in_reply_to_status_id_str !== null) {
 					continue;
 				}
 

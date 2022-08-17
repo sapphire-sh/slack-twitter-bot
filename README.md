@@ -38,7 +38,8 @@
       "strip_retweets",
       "ignore_retweets",
       "ignore_non_media_tweets",
-      "ignore_sensitive_tweets"
+      "ignore_sensitive_tweets",
+			"ignore_replies"
     ]
   },
   {

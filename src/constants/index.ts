@@ -7,6 +7,7 @@ export enum SubscriptionAttributeType {
 	IGNORE_RETWEETS = 'ignore_retweets',
 	IGNORE_NON_MEDIA_TWEETS = 'ignore_non_media_tweets',
 	IGNORE_SENSITIVE_TWEETS = 'ignore_sensitive_tweets',
+	IGNORE_REPLIES = 'ignore_replies',
 	FILTER_KEYWORDS = 'filter_keywords',
 }
 

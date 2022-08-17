@@ -1,6 +1,7 @@
 export interface TweetEntity {
 	id_str: string;
 	full_text: string;
+	in_reply_to_status_id_str: string | null;
 	user: {
 		name: string;
 		screen_name: string;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SubscriptionType, SubscriptionAttributeType } from '../constants';
+import { SubscriptionAttributeType, SubscriptionType } from '../constants';
 
 const attributeTypeSchema = z.nativeEnum(SubscriptionAttributeType);
 const attributeTypeTupleSchema = z.tuple([attributeTypeSchema, z.string()]);

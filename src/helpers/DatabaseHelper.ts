@@ -1,5 +1,5 @@
-import path from 'path';
 import { knex, Knex } from 'knex';
+import path from 'path';
 import { dataDir } from '../constants';
 
 export class DatabaseHelper {

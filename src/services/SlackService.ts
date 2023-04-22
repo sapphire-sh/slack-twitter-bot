@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SubscriptionAttributeType } from '../constants';
 import { TweetEntity } from '../entities';
 import { Subscription } from '../models';
-import { getFilterKeywords, getTweetUrl, getTwitterBlocks, getTwitterMedia, hasTweetKeyword } from '../utils';
+import { getFilterKeywords, getTwitterBlocks, getTwitterMedia, hasTweetKeyword } from '../utils';
 
 export class SlackService {
 	public async sendInternal(url: string, username: string, blocks: MessageBlock[]) {

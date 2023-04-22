@@ -3,17 +3,17 @@ import axios from 'axios';
 import { SubscriptionAttributeType } from '../constants';
 import { TweetEntity } from '../entities';
 import { Subscription } from '../models';
-import { getFilterKeywords, getTweetUrl, getTwitterMedia, hasTweetKeyword } from '../utils';
+import { getFilterKeywords, getTweetUrl, getTwitterBlocks, getTwitterMedia, hasTweetKeyword } from '../utils';
 
 export class SlackService {
-	public async sendInternal(url: string, username: string, text: string) {
-		console.log('slack', new Date(), 'sendInternal', url, username, text);
+	public async sendInternal(url: string, username: string, blocks: MessageBlock[]) {
+		console.log('slack', new Date(), 'sendInternal', url, username, blocks.length);
 
 		await axios.request({
 			method: 'POST',
 			url,
 			headers: { 'Content-Type': 'application/json' },
-			data: { text, username },
+			data: { username, blocks },
 		});
 	}
 
@@ -52,8 +52,9 @@ export class SlackService {
 					continue;
 				}
 
-				const text = getTweetUrl(tweet, flags.stripRetweets);
-				await this.sendInternal(subscription.url, tweet.user.screen_name, text);
+				// const text = getTweetUrl(tweet, flags.stripRetweets);
+				const blocks = getTwitterBlocks(tweet, flags.stripRetweets);
+				await this.sendInternal(subscription.url, tweet.user.screen_name, blocks);
 
 				await sleep(100);
 			} catch (error) {

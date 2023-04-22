@@ -26,12 +26,26 @@ export const hasTweetKeyword = (tweet: TweetEntity, keyword: string): boolean =>
 	return false;
 };
 
+export const getDateStr = (value: string): string => {
+	const date = new Date(value);
+	return new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'medium', timeZone: 'Asia/Seoul' }).format(
+		date
+	);
+};
+
 export const getTwitterBlocks = (tweet: TweetEntity, stripRetweets = false): MessageBlock[] => {
 	if (stripRetweets && !!tweet.retweeted_status) {
 		return getTwitterBlocks(tweet.retweeted_status);
 	}
 
 	const blocks: MessageBlock[] = [
+		{
+			type: 'section',
+			text: {
+				type: 'mrkdwn',
+				text: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
+			},
+		},
 		{
 			type: 'context',
 			elements: [
@@ -46,11 +60,7 @@ export const getTwitterBlocks = (tweet: TweetEntity, stripRetweets = false): Mes
 				},
 				{
 					type: 'mrkdwn',
-					text: tweet.created_at,
-				},
-				{
-					type: 'mrkdwn',
-					text: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
+					text: getDateStr(tweet.created_at),
 				},
 			],
 		},
@@ -65,9 +75,15 @@ export const getTwitterBlocks = (tweet: TweetEntity, stripRetweets = false): Mes
 
 	if (tweet.extended_entities?.media) {
 		const mediaBlocks = getTwitterMediaBlocks(tweet.extended_entities.media);
-		for (const mediaBlock of mediaBlocks) {
-			blocks.push(mediaBlock);
-		}
+		blocks.push(...mediaBlocks);
+	}
+
+	if (tweet.retweeted_status) {
+		blocks.push({
+			type: 'divider',
+		});
+		const retweetBlocks = getTwitterBlocks(tweet.retweeted_status);
+		blocks.push(...retweetBlocks);
 	}
 
 	return blocks;
@@ -82,7 +98,6 @@ export const getTwitterMediaBlocks = (media: TweetMediaEntity[]): MessageBlock[]
 					title: {
 						type: 'plain_text',
 						text: medium.media_url_https,
-						emoji: true,
 					},
 					image_url: `${medium.media_url_https}:orig`,
 					alt_text: medium.media_url_https,

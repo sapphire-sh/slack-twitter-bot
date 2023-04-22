@@ -12,6 +12,7 @@ export enum SubscriptionAttributeType {
 }
 
 export enum SubscriptionType {
+	SYSTEM = 'system',
 	USER = 'user',
 	LIST = 'list',
 	TIMELINE = 'timeline',
@@ -23,6 +24,7 @@ export enum TableName {
 }
 
 export const TwitterApiUrlTable: Record<Subscription['type'], string> = {
+	[SubscriptionType.SYSTEM]: '',
 	[SubscriptionType.USER]: 'statuses/user_timeline',
 	[SubscriptionType.LIST]: 'lists/statuses',
 	[SubscriptionType.TIMELINE]: '', // TODO: timeline

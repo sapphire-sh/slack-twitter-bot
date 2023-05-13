@@ -92,6 +92,8 @@ export const getTwitterBlocks = (tweet: TweetEntity, stripRetweets = false): Mes
 export const getTwitterMediaBlocks = (media: TweetMediaEntity[]): MessageBlock[] => {
 	return media.map((medium) => {
 		switch (medium.type) {
+			case 'animated_gif':
+			case 'video':
 			case 'photo': {
 				return {
 					type: 'image',
@@ -103,28 +105,28 @@ export const getTwitterMediaBlocks = (media: TweetMediaEntity[]): MessageBlock[]
 					alt_text: medium.media_url_https,
 				};
 			}
-			case 'video':
-			case 'animated_gif': {
-				const url = medium.video_info.variants
-					.filter((e) => {
-						return e.content_type.startsWith('video');
-					})
-					.sort((a, b) => {
-						return (b.bitrate ?? 0) - (a.bitrate ?? 0);
-					})[0]?.url;
+			// case 'video':
+			// case 'animated_gif': {
+			// 	const url = medium.video_info.variants
+			// 		.filter((e) => {
+			// 			return e.content_type.startsWith('video');
+			// 		})
+			// 		.sort((a, b) => {
+			// 			return (b.bitrate ?? 0) - (a.bitrate ?? 0);
+			// 		})[0]?.url;
 
-				return {
-					type: 'video',
-					title: {
-						type: 'plain_text',
-						text: url,
-					},
-					title_url: url,
-					video_url: url,
-					alt_text: url,
-					thumbnail_url: medium.media_url_https,
-				};
-			}
+			// 	return {
+			// 		type: 'video',
+			// 		title: {
+			// 			type: 'plain_text',
+			// 			text: url,
+			// 		},
+			// 		title_url: url,
+			// 		video_url: url,
+			// 		alt_text: url,
+			// 		thumbnail_url: medium.media_url_https,
+			// 	};
+			// }
 		}
 	});
 };
